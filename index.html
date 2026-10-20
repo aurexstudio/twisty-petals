@@ -54,7 +54,7 @@ nav ul{flex-direction:column}nav a{padding:.9rem 1rem;font-size:1.1rem}}
 #home{min-height:100svh;padding:calc(var(--nav) + 2rem) 0 3rem;display:flex;align-items:center;position:relative;overflow:hidden;background:radial-gradient(circle at 85% 15%,var(--lav),transparent 50%),radial-gradient(circle at 10% 90%,var(--pink),transparent 55%),var(--cream)}
 .hero{display:grid;gap:1.5rem;align-items:center;position:relative;z-index:2}
 .hero-copy{text-align:center}
-.emblem{width:clamp(170px,48vw,240px);height:auto;border-radius:28px;box-shadow:var(--sh);margin:0 auto 1.1rem}
+.emblem{width:clamp(170px,48vw,240px);height:auto;margin:0 auto 1.1rem;display:block;-webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent 100%);mask-image:radial-gradient(closest-side,#000 62%,transparent 100%);mix-blend-mode:multiply;filter:drop-shadow(0 10px 18px rgba(73,52,71,.12))}
 .hero h1{font-size:clamp(2.8rem,12vw,5.6rem);letter-spacing:-.02em}
 .hero h1 em{font-style:italic;font-weight:500;color:#b04a78}
 .hero p{max-width:30rem;margin:1.1rem auto 1.8rem;color:var(--soft);font-size:1.15rem}
@@ -71,7 +71,7 @@ nav ul{flex-direction:column}nav a{padding:.9rem 1rem;font-size:1.1rem}}
 /* PRODUCTS */
 #flowers{background:linear-gradient(var(--cream),var(--pink) 130%)}
 .note{display:block;width:fit-content;max-width:100%;margin:0 auto 2rem;padding:.5rem 1rem;border-radius:99px;background:var(--lav);font-size:.9rem;text-align:center}
-.grid{display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
+.grid{display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr))}
 .card{background:#fff;border-radius:26px;overflow:hidden;box-shadow:var(--sh);display:flex;flex-direction:column;transition:transform .35s,box-shadow .35s}
 .card:hover,.card:focus-within{transform:translateY(-8px);box-shadow:0 20px 40px rgba(73,52,71,.2)}
 .card:active{transform:scale(.985)}
@@ -212,7 +212,7 @@ body.cart-open #scrim{opacity:1;visibility:visible}
 <section id="flowers">
  <div class="wrap">
   <div class="sec-head rv"><h2>Our Flowers</h2><p>Four handmade pipe-cleaner blooms. Add them to the cart to see your total, then visit our stall to buy.</p></div>
-  <span class="note rv" id="tempNote">🎨 Pictures and prices shown here are temporary placeholders until our real flower photos and final prices are added.</span>
+  <span class="note rv" id="tempNote">🎨 Prices shown are final. Pictures are temporary placeholders until our real flower photos are added.</span>
   <div class="grid" id="products"></div>
   <div class="gallery">
    <h3 class="rv">Petal Gallery</h3>
@@ -304,15 +304,17 @@ const CONFIG = {
 
   /* PRODUCTS: change name, price (a number, in rupees), description, image.
      image: "" shows our temporary illustration. To use a real photo, e.g. "images/tulips.jpg".
-     priceIsPlaceholder: set to false once the price is final (removes the "Sample price" tag). */
-  priceIsPlaceholder: true,
+     priceIsPlaceholder: false = prices are final. Add  sample: true  to any single product whose price is not final yet (shows a "Sample price" tag). */
+  priceIsPlaceholder: false,
   products: [
-    { id: "tulips",     name: "Tulips",           price: 50, art: "tulip",     image: "", desc: "Soft, cup-shaped blooms twisted in sweet pastel pinks." },
-    { id: "sunflowers", name: "Sunflowers",       price: 80, art: "sunflower", image: "", desc: "A sunny face with fuzzy golden petals to brighten any desk." },
-    { id: "lavender",   name: "Lavender Flowers", price: 60, art: "lavender",  image: "", desc: "Gentle purple sprigs that look dreamy in a little vase." },
-    { id: "lilies",     name: "Lilies",           price: 70, art: "lily",      image: "", desc: "Elegant, pointed petals with a graceful curl." },
-    { id: "hanginglotus", name: "Hanging Lotus",     price: 90, art: "lotus",     image: "", desc: "A dreamy pink lotus on a hanging strand, made to brighten a window or corner." },
-    { id: "flowerlamp",   name: "Flower Study Lamp", price: 250, art: "lamp",     image: "", desc: "A flower-decorated lamp to make your study desk feel pretty and cheerful." }
+    { id: "tulips",       name: "Tulips",             price: 99,  art: "tulip",     image: "", desc: "Soft, cup-shaped blooms twisted in sweet pastel pinks." },
+    { id: "sunflowers",   name: "Sunflowers",         price: 149, art: "sunflower", image: "", desc: "A sunny face with fuzzy golden petals to brighten any desk." },
+    { id: "lavender",     name: "Lavender Flowers",   price: 29,  art: "lavender",  image: "", desc: "Gentle purple sprigs that look dreamy in a little vase." },
+    { id: "lilies",       name: "Lilies",             price: 99,  art: "lily",      image: "", desc: "Elegant, pointed petals with a graceful curl." },
+    { id: "hanginglotus", name: "Serene Lotus Hanging", price: 299, art: "lotus",   image: "", desc: "A dreamy pink lotus on a hanging strand, made to brighten a window or corner." },
+    { id: "flowerlamp",   name: "Flower Study Lamp",  price: 250, sample: true, art: "lamp", image: "", desc: "A flower-decorated lamp to make your study desk feel pretty and cheerful." },
+    { id: "petalpin",     name: "Petal Pin",          price: 6,   art: "clipsmall", image: "", desc: "Hair accessory: a tiny handmade blossom on a dainty clip, sweet for everyday styling." },
+    { id: "bloombarrette", name: "Bloom Barrette",    price: 7,   art: "clipbig",   image: "", desc: "Hair accessory: a fuller, bolder flower on a larger clip that makes any hairstyle pop." }
   ],
 
   /* GALLERY: image: "" shows illustration. Use real photo paths later, e.g. "images/gallery1.jpg". size: "", "tall" or "wide" */
@@ -341,7 +343,9 @@ const ART = {
   lavender: `${stem(60, 152, 6)}${[30,42,54,66,78].map((y, i) => `<ellipse cx="${52 + (i%2)*16}" cy="${y}" rx="7" ry="9" fill="#b9a2e8" stroke="#8d70c9" stroke-width="3"/>`).join('')}<ellipse cx="60" cy="20" rx="6" ry="8" fill="#b9a2e8" stroke="#8d70c9" stroke-width="3"/>`,
   lily: `${stem(60)}${ring(6, 60, 48, 9, 24, 18, '#fff4f8', '#e08fb3')}<circle cx="60" cy="48" r="6" fill="#ffd96b" stroke="#e9a93a" stroke-width="3"/>`,
   lotus: `<path d="M60 8V72" stroke="#b89ccf" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="9" r="5" fill="none" stroke="#b89ccf" stroke-width="3"/><g stroke="#c9638f" stroke-width="3" stroke-linejoin="round"><ellipse cx="60" cy="108" rx="12" ry="30" fill="#f8dce8" transform="rotate(-64 60 134)"/><ellipse cx="60" cy="108" rx="12" ry="30" fill="#f8dce8" transform="rotate(64 60 134)"/><ellipse cx="60" cy="106" rx="13" ry="32" fill="#f3b6cd" transform="rotate(-34 60 134)"/><ellipse cx="60" cy="106" rx="13" ry="32" fill="#f3b6cd" transform="rotate(34 60 134)"/><ellipse cx="60" cy="104" rx="13" ry="34" fill="#EFA7C4"/></g><path d="M40 138q20 14 40 0q-20 -6 -40 0" fill="#8fcb9f" stroke="#6fae80" stroke-width="3" stroke-linejoin="round"/>`,
-  lamp: `<g transform="translate(0 -16)"><path d="M60 74V144" stroke="#8d70c9" stroke-width="5" stroke-linecap="round"/><ellipse cx="60" cy="148" rx="28" ry="7" fill="#E8DFF8" stroke="#8d70c9" stroke-width="4"/><path d="M32 78Q60 14 88 78Z" fill="#fff4f8" stroke="#8d70c9" stroke-width="4" stroke-linejoin="round"/><g stroke="#c9638f" stroke-width="2.5"><circle cx="48" cy="64" r="6" fill="#EFA7C4"/><circle cx="62" cy="46" r="6" fill="#ffd96b"/><circle cx="74" cy="66" r="6" fill="#EFA7C4"/></g><path d="M40 86Q60 100 80 86" stroke="#ffd96b" stroke-width="4" fill="none" stroke-linecap="round"/></g>`
+  lamp: `<g transform="translate(0 -16)"><path d="M60 74V144" stroke="#8d70c9" stroke-width="5" stroke-linecap="round"/><ellipse cx="60" cy="148" rx="28" ry="7" fill="#E8DFF8" stroke="#8d70c9" stroke-width="4"/><path d="M32 78Q60 14 88 78Z" fill="#fff4f8" stroke="#8d70c9" stroke-width="4" stroke-linejoin="round"/><g stroke="#c9638f" stroke-width="2.5"><circle cx="48" cy="64" r="6" fill="#EFA7C4"/><circle cx="62" cy="46" r="6" fill="#ffd96b"/><circle cx="74" cy="66" r="6" fill="#EFA7C4"/></g><path d="M40 86Q60 100 80 86" stroke="#ffd96b" stroke-width="4" fill="none" stroke-linecap="round"/></g>`,
+  clipsmall: `<g transform="translate(-15 -23) scale(1.25)"><rect x="30" y="96" width="60" height="13" rx="6.5" fill="#E8DFF8" stroke="#8d70c9" stroke-width="3"/><path d="M38 102.5h44" stroke="#8d70c9" stroke-width="2" stroke-dasharray="3 4" stroke-linecap="round"/>${ring(5, 60, 76, 7, 13, 13, '#f8dce8', '#c9638f')}<circle cx="60" cy="76" r="5.5" fill="#ffd96b" stroke="#e9a93a" stroke-width="3"/></g>`,
+  clipbig: `<path d="M34 104q-18 -4 -22 -24q20 2 22 24M86 104q18 -4 22 -24q-20 2 -22 24" fill="#8fcb9f" stroke="#6fae80" stroke-width="3" stroke-linejoin="round"/><rect x="14" y="104" width="92" height="17" rx="8.5" fill="#E8DFF8" stroke="#8d70c9" stroke-width="3"/><path d="M24 112.5h72" stroke="#8d70c9" stroke-width="2" stroke-dasharray="3 4" stroke-linecap="round"/>${ring(8, 60, 66, 9, 20, 22, '#f3b6cd', '#c9638f')}${ring(8, 60, 66, 6, 13, 11, '#f8dce8', '#c9638f')}<circle cx="60" cy="66" r="8" fill="#ffd96b" stroke="#e9a93a" stroke-width="3"/>`
 };
 const svgOf = k => `<svg viewBox="0 0 120 160" role="img" aria-label="Pipe-cleaner ${k} illustration">${ART[k]}</svg>`;
 const bouquet = list => `<div style="display:flex;gap:2%;height:100%;width:100%;justify-content:center;align-items:flex-end">${list.map(k => svgOf(k)).join('')}</div>`;
@@ -370,7 +374,7 @@ $('#products').innerHTML = CONFIG.products.map((p, i) => `
     <div class="card-body">
       <h3>${p.name}</h3>
       <p>${p.desc}</p>
-      <div class="price">${rupee(p.price)}${CONFIG.priceIsPlaceholder ? '<small>Sample price</small>' : ''}</div>
+      <div class="price">${rupee(p.price)}${(CONFIG.priceIsPlaceholder || p.sample) ? '<small>Sample price</small>' : ''}</div>
       <button class="btn add" data-id="${p.id}">Add to Cart</button>
     </div>
   </article>`).join('');
