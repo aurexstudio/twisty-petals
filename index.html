@@ -71,11 +71,11 @@ nav ul{flex-direction:column}nav a{padding:.9rem 1rem;font-size:1.1rem}}
 /* PRODUCTS */
 #flowers{background:linear-gradient(var(--cream),var(--pink) 130%)}
 .note{display:block;width:fit-content;max-width:100%;margin:0 auto 2rem;padding:.5rem 1rem;border-radius:99px;background:var(--lav);font-size:.9rem;text-align:center}
-.grid{display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr))}
+.grid{display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
 .card{background:#fff;border-radius:26px;overflow:hidden;box-shadow:var(--sh);display:flex;flex-direction:column;transition:transform .35s,box-shadow .35s}
 .card:hover,.card:focus-within{transform:translateY(-8px);box-shadow:0 20px 40px rgba(73,52,71,.2)}
 .card:active{transform:scale(.985)}
-.media{aspect-ratio:1/1;background:linear-gradient(160deg,var(--pink),var(--lav));overflow:hidden;display:grid;place-items:center}
+.media{position:relative;aspect-ratio:1/1;background:linear-gradient(160deg,var(--pink),var(--lav));overflow:hidden;display:grid;place-items:center}
 .media>*{width:100%;height:100%;object-fit:cover;transition:transform .6s}
 .media svg{width:78%;height:88%}
 .card:hover .media>*{transform:scale(1.07) rotate(-1deg)}
@@ -83,6 +83,7 @@ nav ul{flex-direction:column}nav a{padding:.9rem 1rem;font-size:1.1rem}}
 .card h3{font-size:1.45rem}
 .card p{color:var(--soft);font-size:.98rem;flex:1}
 .price{font-weight:800;font-size:1.3rem}
+.media>.herotag{width:auto;height:auto;transform:none;position:absolute;top:.8rem;left:.8rem;z-index:1;background:var(--glass);backdrop-filter:blur(8px);padding:.25rem .8rem;border-radius:99px;font-size:.8rem;font-weight:800;color:var(--ink,#493447);box-shadow:var(--sh)}
 .price small{font-weight:600;font-size:.75rem;background:var(--lav);padding:.1rem .5rem;border-radius:99px;margin-left:.4rem;vertical-align:middle}
 .card .btn{width:100%;margin-top:.5rem}
 
@@ -279,8 +280,8 @@ const SCHOOL_LOGO_EMBEDDED="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAA
    ===================================================================== */
 const CONFIG = {
   /* EVENT TIME (India time, +05:30). Format: YYYY-MM-DDTHH:MM:SS+05:30 */
-  eventStart: "2026-10-24T09:00:00+05:30",   // TEMPORARY 9:00 AM: replace with the real start time
-  eventEnd:   "2026-10-24T16:00:00+05:30",   // TEMPORARY 4:00 PM: replace with the real end time
+  eventStart: "2026-10-24T17:00:00+05:30",   // 5:00 PM IST (confirmed)
+  eventEnd:   "2026-10-24T20:00:00+05:30",   // TEMPORARY 8:00 PM: replace with the real end time
   hideCountdownAfterEvent: false,            // true = hide the whole Kaushal Vikas section once the event is over
 
   /* SCHOOL LOGO: "" = use the built-in SNBP logo. To use a different file, put it next to index.html and write its name, e.g. "school-logo.png". */
@@ -295,8 +296,11 @@ const CONFIG = {
     { id: "sunflowers",   name: "Sunflowers",         price: 149, art: "sunflower", image: "", desc: "A sunny face with fuzzy golden petals to brighten any desk." },
     { id: "lavender",     name: "Lavender Flowers",   price: 29,  art: "lavender",  image: "", desc: "Gentle purple sprigs that look dreamy in a little vase." },
     { id: "lilies",       name: "Lilies",             price: 99,  art: "lily",      image: "", desc: "Elegant, pointed petals with a graceful curl." },
-    { id: "hanginglotus", name: "Serene Lotus Hanging", price: 299, art: "lotus",   image: "", desc: "A dreamy pink lotus on a hanging strand, made to brighten a window or corner." },
-    { id: "flowerlamp",   name: "Flower Study Lamp",  price: 250, sample: true, art: "lamp", image: "", desc: "A flower-decorated lamp to make your study desk feel pretty and cheerful." },
+    { id: "hibiscus",      name: "Hibiscus",           price: 69,  art: "hibiscus", image: "", desc: "A bold, show-stopping bloom with a long center stamen, twisted in vivid pink-red." },
+    { id: "petiterose",    name: "Petite Rose",        price: 10,  art: "rose",      image: "", desc: "A small, sweet handmade rose with soft layered petals, perfect for gifting." },
+    { id: "hanginglotus", name: "Serene Lotus Hanging", price: 349, hero: true, art: "lotus",   image: "", desc: "A dreamy pink lotus on a hanging strand, made to brighten a window or corner." },
+    { id: "jellypop",      name: "Jelly Pop",          price: 25,  art: "jelly",     image: "", desc: "Keychain: a squishy-cute jellyfish with dreamy dangling tentacles for your bag." },
+    { id: "bunnyboo",      name: "Bunny Boo",          price: 25,  art: "bunny",     image: "", desc: "Keychain: a fluffy, floppy-eared bunny that makes any bag instantly cuter." },
     { id: "petalpin",     name: "Petal Pin",          price: 6,   art: "clipsmall", image: "", desc: "Hair accessory: a tiny handmade blossom on a dainty clip, sweet for everyday styling." },
     { id: "bloombarrette", name: "Bloom Barrette",    price: 7,   art: "clipbig",   image: "", desc: "Hair accessory: a fuller, bolder flower on a larger clip that makes any hairstyle pop." }
   ],
@@ -317,7 +321,10 @@ const ART = {
   lavender: `${stem(60, 152, 6)}${[30,42,54,66,78].map((y, i) => `<ellipse cx="${52 + (i%2)*16}" cy="${y}" rx="7" ry="9" fill="#b9a2e8" stroke="#8d70c9" stroke-width="3"/>`).join('')}<ellipse cx="60" cy="20" rx="6" ry="8" fill="#b9a2e8" stroke="#8d70c9" stroke-width="3"/>`,
   lily: `${stem(60)}${ring(6, 60, 48, 9, 24, 18, '#fff4f8', '#e08fb3')}<circle cx="60" cy="48" r="6" fill="#ffd96b" stroke="#e9a93a" stroke-width="3"/>`,
   lotus: `<path d="M60 8V72" stroke="#b89ccf" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="9" r="5" fill="none" stroke="#b89ccf" stroke-width="3"/><g stroke="#c9638f" stroke-width="3" stroke-linejoin="round"><ellipse cx="60" cy="108" rx="12" ry="30" fill="#f8dce8" transform="rotate(-64 60 134)"/><ellipse cx="60" cy="108" rx="12" ry="30" fill="#f8dce8" transform="rotate(64 60 134)"/><ellipse cx="60" cy="106" rx="13" ry="32" fill="#f3b6cd" transform="rotate(-34 60 134)"/><ellipse cx="60" cy="106" rx="13" ry="32" fill="#f3b6cd" transform="rotate(34 60 134)"/><ellipse cx="60" cy="104" rx="13" ry="34" fill="#EFA7C4"/></g><path d="M40 138q20 14 40 0q-20 -6 -40 0" fill="#8fcb9f" stroke="#6fae80" stroke-width="3" stroke-linejoin="round"/>`,
-  lamp: `<g transform="translate(0 -16)"><path d="M60 74V144" stroke="#8d70c9" stroke-width="5" stroke-linecap="round"/><ellipse cx="60" cy="148" rx="28" ry="7" fill="#E8DFF8" stroke="#8d70c9" stroke-width="4"/><path d="M32 78Q60 14 88 78Z" fill="#fff4f8" stroke="#8d70c9" stroke-width="4" stroke-linejoin="round"/><g stroke="#c9638f" stroke-width="2.5"><circle cx="48" cy="64" r="6" fill="#EFA7C4"/><circle cx="62" cy="46" r="6" fill="#ffd96b"/><circle cx="74" cy="66" r="6" fill="#EFA7C4"/></g><path d="M40 86Q60 100 80 86" stroke="#ffd96b" stroke-width="4" fill="none" stroke-linecap="round"/></g>`,
+  hibiscus: `${stem(60)}${ring(5, 60, 48, 15, 22, 18, '#ff9db1', '#d0536f')}<circle cx="60" cy="48" r="7" fill="#c13a5a" stroke="#8f2742" stroke-width="3"/><path d="M60 48Q76 34 82 20" stroke="#d0536f" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="82" cy="20" r="3.5" fill="#ffd96b" stroke="#e9a93a" stroke-width="2"/><circle cx="76" cy="26" r="3" fill="#ffd96b" stroke="#e9a93a" stroke-width="2"/><circle cx="88" cy="27" r="3" fill="#ffd96b" stroke="#e9a93a" stroke-width="2"/>`,
+  jelly: `<circle cx="60" cy="14" r="9" fill="none" stroke="#8d70c9" stroke-width="4"/><ellipse cx="60" cy="33" rx="5" ry="11" fill="none" stroke="#8d70c9" stroke-width="3"/><g fill="none" stroke="#b9a2e8" stroke-width="5" stroke-linecap="round"><path d="M40 98q-8 14 0 26t-2 18"/><path d="M60 100q-8 14 0 26t0 16"/><path d="M80 98q8 14 0 26t2 18"/></g><path d="M26 98Q26 48 60 48Q94 48 94 98Q86 104 77 98Q68 104 60 98Q52 104 43 98Q34 104 26 98Z" fill="#e3d6fa" stroke="#8d70c9" stroke-width="3" stroke-linejoin="round"/><circle cx="49" cy="76" r="3.5" fill="#493447"/><circle cx="71" cy="76" r="3.5" fill="#493447"/><circle cx="42" cy="85" r="5" fill="#f8b4cc"/><circle cx="78" cy="85" r="5" fill="#f8b4cc"/><path d="M55 84q5 5 10 0" fill="none" stroke="#493447" stroke-width="2.5" stroke-linecap="round"/>`,
+  bunny: `<circle cx="60" cy="14" r="9" fill="none" stroke="#8d70c9" stroke-width="4"/><ellipse cx="60" cy="38" rx="5" ry="14" fill="none" stroke="#8d70c9" stroke-width="3"/><ellipse cx="45" cy="66" rx="10" ry="25" fill="#fff4f8" stroke="#e08fb3" stroke-width="3"/><ellipse cx="45" cy="68" rx="4.5" ry="16" fill="#f8b4cc"/><ellipse cx="75" cy="66" rx="10" ry="25" fill="#fff4f8" stroke="#e08fb3" stroke-width="3"/><ellipse cx="75" cy="68" rx="4.5" ry="16" fill="#f8b4cc"/><ellipse cx="60" cy="112" rx="33" ry="28" fill="#fff4f8" stroke="#e08fb3" stroke-width="3"/><circle cx="49" cy="108" r="3.5" fill="#493447"/><circle cx="71" cy="108" r="3.5" fill="#493447"/><circle cx="41" cy="119" r="5" fill="#f8b4cc"/><circle cx="79" cy="119" r="5" fill="#f8b4cc"/><ellipse cx="60" cy="116" rx="3.5" ry="2.8" fill="#ef7fa8"/><path d="M60 119q-3 5 -8 2M60 119q3 5 8 2" fill="none" stroke="#493447" stroke-width="2.5" stroke-linecap="round"/>`,
+  rose: `${stem(60)}<circle cx="60" cy="50" r="24" fill="#f7a3c0" stroke="#c9638f" stroke-width="3"/><circle cx="62" cy="47" r="16" fill="#ef7fa8" stroke="#c9638f" stroke-width="3"/><circle cx="59" cy="50" r="8.5" fill="#e0618f" stroke="#b04b78" stroke-width="3"/><path d="M52 44q8 -8 17 -2M48 56q12 8 24 -4" fill="none" stroke="#c9638f" stroke-width="3" stroke-linecap="round"/>`,
   clipsmall: `<g transform="translate(-15 -23) scale(1.25)"><rect x="30" y="96" width="60" height="13" rx="6.5" fill="#E8DFF8" stroke="#8d70c9" stroke-width="3"/><path d="M38 102.5h44" stroke="#8d70c9" stroke-width="2" stroke-dasharray="3 4" stroke-linecap="round"/>${ring(5, 60, 76, 7, 13, 13, '#f8dce8', '#c9638f')}<circle cx="60" cy="76" r="5.5" fill="#ffd96b" stroke="#e9a93a" stroke-width="3"/></g>`,
   clipbig: `<path d="M34 104q-18 -4 -22 -24q20 2 22 24M86 104q18 -4 22 -24q-20 2 -22 24" fill="#8fcb9f" stroke="#6fae80" stroke-width="3" stroke-linejoin="round"/><rect x="14" y="104" width="92" height="17" rx="8.5" fill="#E8DFF8" stroke="#8d70c9" stroke-width="3"/><path d="M24 112.5h72" stroke="#8d70c9" stroke-width="2" stroke-dasharray="3 4" stroke-linecap="round"/>${ring(8, 60, 66, 9, 20, 22, '#f3b6cd', '#c9638f')}${ring(8, 60, 66, 6, 13, 11, '#f8dce8', '#c9638f')}<circle cx="60" cy="66" r="8" fill="#ffd96b" stroke="#e9a93a" stroke-width="3"/>`
 };
@@ -344,7 +351,7 @@ if (!reduceMotion) {
 /* ---------- Render products ---------- */
 $('#products').innerHTML = CONFIG.products.map((p, i) => `
   <article class="card rv" style="--d:${i*.1}s">
-    <div class="media">${mediaHTML(p.image, p.art, p.name + ' (temporary reference image)')}</div>
+    <div class="media">${p.hero ? '<span class="herotag">✨ Signature Piece</span>' : ''}${mediaHTML(p.image, p.art, p.name + ' (temporary reference image)')}</div>
     <div class="card-body">
       <h3>${p.name}</h3>
       <p>${p.desc}</p>
@@ -439,7 +446,7 @@ if ('IntersectionObserver' in window && !reduceMotion) {
 /* ---------- Countdown ---------- */
 const start = new Date(CONFIG.eventStart).getTime(), end = new Date(CONFIG.eventEnd).getTime();
 const fmt = o => new Date(start).toLocaleString('en-IN', {timeZone: 'Asia/Kolkata', ...o});
-$('#festDate').textContent = `${fmt({weekday:'long', day:'numeric', month:'long', year:'numeric'})}, starting around ${fmt({hour:'numeric', minute:'2-digit', hour12:true})} IST (time to be confirmed)`;
+$('#festDate').textContent = `${fmt({weekday:'long', day:'numeric', month:'long', year:'numeric'})}, from ${fmt({hour:'numeric', minute:'2-digit', hour12:true}).toUpperCase()} IST`;
 const fest = $('#fest');
 let lastState = '';
 function tick() {
